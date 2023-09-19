@@ -1,20 +1,34 @@
 const buttons = document.querySelectorAll("button")
 let gameCount = 0
 let selectionOptions = new Set(['paper', 'rock', 'scissors'])
-console.log(selectionOptions)
 
 const getComputerSelectionIdx = () => {
-    return (Math.random() * 2).toFixed()
+    return parseInt((Math.random() * 2).toFixed())
 }
-
+ 
 const playGame = (playerSelection) => {
     if (gameCount < 5 && selectionOptions.has(playerSelection)) {
         const computerSelection = [...selectionOptions][getComputerSelectionIdx()]
+        const computerSelectionIdx = [...selectionOptions].indexOf(computerSelection)
+        const playerSelectionIdx = [...selectionOptions].indexOf(playerSelection)
+        const maxSelectionIdx = [...selectionOptions].length -1
+
+        // Compute possible outcomes
         if (playerSelection === computerSelection) {
             console.log('A TIE!')
+        } else if (playerSelectionIdx === maxSelectionIdx && computerSelectionIdx === 0) {
+            console.log('player wins')
+        } else if (playerSelectionIdx === 0 && computerSelectionIdx === maxSelectionIdx) {
+            console.log('comp win')
+        } else {
+            if (playerSelectionIdx > computerSelectionIdx) {
+                console.log('player wins else')
+            } else {
+                console.log('compp wins else')
+            }
         }
+
         gameCount++
-        console.log(playerSelection, computerSelection)
     }
 }
 
@@ -30,15 +44,9 @@ buttons.forEach((button) => button.addEventListener("click", () => {
 // Computer compares user & computer score
 
 // OUTCOMES
-// rock beats scissors
-// scissors beats paper
-// paper beats rock
-
-
-// paper 0
-// rock 1
-// scissors 2
-// paper 0
+// paper beats rock || 0 beats 1
+// rock beats scissors || 1 bets 2
+// scissors beats paper || 2 beats 0
 
 // Computer delivers results message
 // Computer increments games + 1
