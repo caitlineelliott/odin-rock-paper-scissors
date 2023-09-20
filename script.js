@@ -60,14 +60,18 @@ const getComputerSelection = () => {
 const playGame = (playerSelection) => {
     if (gameCount < 5 && selectionOptions.has(playerSelection)) {
         const computerSelection = getComputerSelection()
+
         storeRoundSelections(playerSelection, computerSelection)
+        
         const winner = determineWinner(playerSelection, computerSelection)
         incrementScores(winner)
+
         if (winner === 'player') {
             setVictoryMessage(winner, playerSelection, computerSelection)
         } else {
             setVictoryMessage(winner, computerSelection, playerSelection)
         }
+        
         gameCount++
     }
 }
