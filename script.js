@@ -1,17 +1,24 @@
 const buttons = document.querySelectorAll("button")
 const scoresContainer = document.querySelector(".scores-container")
+const playerSelection = document.querySelector(".player-selection")
+const computerSelection = document.querySelector(".computer-selection")
 const playerScore = document.querySelector(".player-score")
 const computerScore = document.querySelector(".computer-score")
+const results = document.querySelector(".results")
 
 let gameCount = 0
 let selectionOptions = new Set(['rock', 'paper', 'scissors'])
-let gameWinner
+const maxSelectionIdx = [...selectionOptions].length -1
 
-const getComputerSelectionIdx = () => {
-    return parseInt((Math.random() * 2).toFixed())
+const setVictoryMessage = (winner, winningSelection, losingSelection) => {
+    if (winner === 'both') {
+        results.innerHTML = `It's a tie!`
+    } else {
+        results.innerHTML = `${winner} wins! ${winningSelection} beats ${losingSelection}`
+    }
 }
 
-const setResults = (gameWinner) => {
+const incrementScores = (gameWinner) => {
     if (gameWinner === 'computer') {
         computerScore.innerHTML++
     } else if (gameWinner === 'player') {
@@ -21,30 +28,46 @@ const setResults = (gameWinner) => {
         playerScore.innerHTML++
     }
 }
- 
+
+const determineWinner = (playerSelection, computerSelection) => {
+    const computerSelectionIdx = [...selectionOptions].indexOf(computerSelection)
+    const playerSelectionIdx = [...selectionOptions].indexOf(playerSelection)
+
+    if (playerSelection === computerSelection) {
+        return 'both'
+    } else if (playerSelectionIdx === maxSelectionIdx && computerSelectionIdx === 0) {
+        return 'computer'
+    } else if (playerSelectionIdx === 0 && computerSelectionIdx === maxSelectionIdx) {
+        return 'player'
+    } else {
+        if (playerSelectionIdx > computerSelectionIdx) {
+            return 'player'
+        } else {
+            return 'computer'
+        }
+    }
+}
+
+const storeRoundSelections = (player, computer) => {
+    playerSelection.innerHTML = player
+    computerSelection.innerHTML = computer
+}
+
+const getComputerSelection = () => {
+    return [...selectionOptions][parseInt((Math.random() * 2).toFixed())]
+}
+   
 const playGame = (playerSelection) => {
     if (gameCount < 5 && selectionOptions.has(playerSelection)) {
-        const computerSelection = [...selectionOptions][getComputerSelectionIdx()]
-        const computerSelectionIdx = [...selectionOptions].indexOf(computerSelection)
-        const playerSelectionIdx = [...selectionOptions].indexOf(playerSelection)
-        const maxSelectionIdx = [...selectionOptions].length -1
-
-        // Compute possible outcomes
-        if (playerSelection === computerSelection) {
-            gameWinner = 'both'
-        } else if (playerSelectionIdx === maxSelectionIdx && computerSelectionIdx === 0) {
-            gameWinner = 'computer'
-        } else if (playerSelectionIdx === 0 && computerSelectionIdx === maxSelectionIdx) {
-            gameWinner = 'player'
+        const computerSelection = getComputerSelection()
+        storeRoundSelections(playerSelection, computerSelection)
+        const winner = determineWinner(playerSelection, computerSelection)
+        incrementScores(winner)
+        if (winner === 'player') {
+            setVictoryMessage(winner, playerSelection, computerSelection)
         } else {
-            if (playerSelectionIdx > computerSelectionIdx) {
-                gameWinner = 'player'
-            } else {
-                gameWinner = 'computer'
-            }
+            setVictoryMessage(winner, computerSelection, playerSelection)
         }
-
-        setResults(gameWinner)
         gameCount++
     }
 }
