@@ -1,9 +1,25 @@
 const buttons = document.querySelectorAll("button")
+const scoresContainer = document.querySelector(".scores-container")
+const playerScore = document.querySelector(".player-score")
+const computerScore = document.querySelector(".computer-score")
+
 let gameCount = 0
 let selectionOptions = new Set(['rock', 'paper', 'scissors'])
+let gameWinner
 
 const getComputerSelectionIdx = () => {
     return parseInt((Math.random() * 2).toFixed())
+}
+
+const setResults = (gameWinner) => {
+    if (gameWinner === 'computer') {
+        computerScore.innerHTML++
+    } else if (gameWinner === 'player') {
+        playerScore.innerHTML++
+    } else {
+        computerScore.innerHTML++
+        playerScore.innerHTML++
+    }
 }
  
 const playGame = (playerSelection) => {
@@ -15,23 +31,20 @@ const playGame = (playerSelection) => {
 
         // Compute possible outcomes
         if (playerSelection === computerSelection) {
-            console.log('A TIE!')
+            gameWinner = 'both'
         } else if (playerSelectionIdx === maxSelectionIdx && computerSelectionIdx === 0) {
-            console.log('comp win')
-            console.log(computerSelection, ' beats ', playerSelection)
+            gameWinner = 'computer'
         } else if (playerSelectionIdx === 0 && computerSelectionIdx === maxSelectionIdx) {
-            console.log(playerSelection, ' beats ', computerSelection)
-            console.log('player wins')
+            gameWinner = 'player'
         } else {
             if (playerSelectionIdx > computerSelectionIdx) {
-                console.log('player wins else')
-                console.log(playerSelection, ' beats ', computerSelection)
+                gameWinner = 'player'
             } else {
-                console.log('compp wins else')
-                console.log(computerSelection, ' beats ', playerSelection)
+                gameWinner = 'computer'
             }
         }
 
+        setResults(gameWinner)
         gameCount++
     }
 }
