@@ -49,23 +49,39 @@ const determineWinner = (playerSelection, computerSelection) => {
     }
 }
 
-const getComputerSelection = () => {
-    return [...selectionOptions][parseInt((Math.random() * 2).toFixed())]
-}
-
-const updateBtnUI = (playerSelection) => {
+const setSelectionOnUI = (playerSelection, computerSelection) => {
     buttons.forEach(button => {
         if (button.id !== playerSelection) {
             button.classList.add('not-selected')
+            button.classList.remove('selected')
+        } else {
+            button.classList.add('selected')
+            button.classList.remove('not-selected')
         }
     })
+
+    const options = document.getElementsByClassName('computer-btns')[0].children
+    for (option of options) {
+        if (option.id === `computer-${computerSelection}`) {
+            option.classList.add('selected')
+            option.classList.remove('not-selected')
+        } else {
+            option.classList.remove('selected')
+            option.classList.add('not-selected')
+        }
+    }
+}
+
+const getComputerSelection = () => {
+    const computerSelection = [...selectionOptions][parseInt((Math.random() * 2).toFixed())]
+    setSelectionOnUI(computerSelection)
+    return computerSelection
 }
    
 const playGame = (playerSelection) => {
     if (gameCount < 5 && selectionOptions.has(playerSelection)) {
-        updateBtnUI(playerSelection)
-
         const computerSelection = getComputerSelection()
+        setSelectionOnUI(playerSelection, computerSelection)
         
         const winner = determineWinner(playerSelection, computerSelection)
         incrementScores(winner)

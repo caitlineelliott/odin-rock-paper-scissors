@@ -78,7 +78,7 @@ button:hover {
     color: #d3d3d3;
 }
 
-button:focus {
+.selected {
     background-color: #00a206;
     color: #d3d3d3;
 }
