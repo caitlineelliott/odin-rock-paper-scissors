@@ -1,0 +1,92 @@
+body {
+    background: #202020;
+    padding: 20px;
+    font-family: 'Press Start 2P';
+    color: #d3d3d3;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 50vw;
+}
+
+.player-container {
+    margin: 50px 0;
+}
+
+.computer-container {
+    margin-bottom: 50px;
+}
+
+h1,
+#results {
+    color: #1dd000;
+    font-family: 'Press Start 2P';
+    text-transform: uppercase;
+    font-size: 4vw;
+    line-height: 5vw;
+    margin: 0;
+    padding: 0;
+}
+
+#results {
+    border-top: 10px dashed #1dd000;
+    border-bottom: 10px dashed #1dd000;
+    text-align: center;
+    margin: 0;
+    padding: 10px 0 8px 0;
+    font-size: 3.5vw;
+    display: none;
+}
+
+.choices-container {
+    border-top: 10px dashed #1dd000;
+}
+
+h2 {
+    text-transform: uppercase;
+    font-size: 1.5vw;
+    margin: 0 0 15px 0;
+    padding: 0;
+}
+
+.computer-btns {
+    display: flex;
+    gap: 15px;
+}
+
+button,
+.computer-options {
+    background: #1dd000;
+    border-radius: 10px;
+    border: none;
+    color: #626363;
+    width: 100px;
+    height: 100px;
+}
+
+.computer-options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button:hover {
+    cursor: pointer;
+    background: #00b800;
+    color: #d3d3d3;
+}
+
+button:focus {
+    background-color: #00a206;
+    color: #d3d3d3;
+}
+
+.not-selected {
+    background-color: black;
+}
+
+.material-symbols-outlined {
+    font-size: 50px !important;
+} 

@@ -4,17 +4,18 @@ const playerSelection = document.querySelector(".player-selection")
 const computerSelection = document.querySelector(".computer-selection")
 const playerScore = document.querySelector(".player-score")
 const computerScore = document.querySelector(".computer-score")
-const results = document.querySelector(".results")
+const results = document.getElementById("results")
 
 let gameCount = 0
 let selectionOptions = new Set(['rock', 'paper', 'scissors'])
 const maxSelectionIdx = [...selectionOptions].length -1
 
-const setVictoryMessage = (winner, winningSelection, losingSelection) => {
+const setVictoryMessage = (winner) => {
+    results.style.display = 'block';
     if (winner === 'both') {
         results.innerHTML = `It's a tie!`
     } else {
-        results.innerHTML = `${winner} wins! ${winningSelection} beats ${losingSelection}`
+        results.innerHTML = `${winner} wins!`
     }
 }
 
@@ -48,20 +49,23 @@ const determineWinner = (playerSelection, computerSelection) => {
     }
 }
 
-const storeRoundSelections = (player, computer) => {
-    playerSelection.innerHTML = player
-    computerSelection.innerHTML = computer
-}
-
 const getComputerSelection = () => {
     return [...selectionOptions][parseInt((Math.random() * 2).toFixed())]
+}
+
+const updateBtnUI = (playerSelection) => {
+    buttons.forEach(button => {
+        if (button.id !== playerSelection) {
+            button.classList.add('not-selected')
+        }
+    })
 }
    
 const playGame = (playerSelection) => {
     if (gameCount < 5 && selectionOptions.has(playerSelection)) {
-        const computerSelection = getComputerSelection()
+        updateBtnUI(playerSelection)
 
-        storeRoundSelections(playerSelection, computerSelection)
+        const computerSelection = getComputerSelection()
         
         const winner = determineWinner(playerSelection, computerSelection)
         incrementScores(winner)
@@ -71,28 +75,7 @@ const playGame = (playerSelection) => {
         } else {
             setVictoryMessage(winner, computerSelection, playerSelection)
         }
-        
+
         gameCount++
     }
 }
-
-buttons.forEach((button) => button.addEventListener("click", () => { 
-    playGame(button.id)
-}))
-
-
-// User clicks button
-// if GAMES < 5 =>
-// Computer stores user selection
-// Computer gets computer selection
-// Computer compares user & computer score
-
-// OUTCOMES
-// rock beats scissors 0
-// paper beats rock 1
-// scissors beats paper 2
-
-// Computer delivers results message
-// Computer increments games + 1
-// Computer records scores
-// Loop until Games === 5
