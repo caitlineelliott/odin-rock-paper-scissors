@@ -12,7 +12,14 @@
 </head>
 <body>
     <div class="container">
-        <h1>Rock,<br>Paper,<br>Scissors!</h1>
+        <div class="header">
+            <h1>Rock,<br>Paper,<br>Scissors!</h1>
+            <div class="score-container">
+                <p>SCOREBOARD</p>
+                <p>You: <span class="player-score">0</span></p>
+                <p>Computer: <span class="computer-score">0</span></p>
+            </div>
+        </div>
         <div class="choices-container">
             <div class="player-container">
                 <h2>Choose Your Fighter:</h2>
@@ -46,9 +53,6 @@
         </div>
         
         <p id="results"></p>
-        <span class="player-score">0</span>
-        <span class="computer-score">0</span>
-    
         <!-- <div class="scores-container">
             <p>Score:</p>
             <ul>
