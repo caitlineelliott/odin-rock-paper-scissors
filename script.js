@@ -5,17 +5,22 @@ const computerSelection = document.querySelector(".computer-selection")
 const playerScore = document.querySelector(".player-score")
 const computerScore = document.querySelector(".computer-score")
 const results = document.getElementById("results")
+const resultsSubtitle = document.getElementById("results-subtitle")
 
 let gameCount = 0
 let selectionOptions = new Set(['rock', 'paper', 'scissors'])
 const maxSelectionIdx = [...selectionOptions].length -1
 
-const setVictoryMessage = (winner) => {
+const setVictoryMessage = (winner, winnerSelection, loserSelection) => {
     results.style.display = 'block';
     if (winner === 'both') {
         results.innerHTML = `It's a tie!`
+        resultsSubtitle.style.display = 'block'
+        resultsSubtitle.innerHTML = `both chose ${winnerSelection}`
     } else {
         results.innerHTML = `${winner} wins!`
+        resultsSubtitle.style.display = 'block'
+        resultsSubtitle.innerHTML = `${winnerSelection} beats ${loserSelection}`
     }
 }
 
@@ -77,6 +82,19 @@ const getComputerSelection = () => {
     setSelectionOnUI(computerSelection)
     return computerSelection
 }
+
+const getOverallWinnerMessage = (playerScore, computerScore) => {
+    let result
+    if (playerScore > computerScore) {
+        result = `you won ${playerScore} to ${computerScore}`
+    } else if (computerScore > playerScore) {
+        result = `the computer won ${computerScore} to ${playerScore}`
+    } else {
+        result = `it's a ${playerScore}-${computerScore} tie`
+    }
+
+    return `Out of 5 games, ${result}! Play again?`
+}
    
 const playGame = (playerSelection) => {
     if (gameCount < 5 && selectionOptions.has(playerSelection)) {
@@ -93,5 +111,8 @@ const playGame = (playerSelection) => {
         }
 
         gameCount++
+    } else {
+        const message = getOverallWinnerMessage(parseInt(playerScore.innerHTML), parseInt(computerScore.innerHTML))
+        confirm(message)
     }
 }
