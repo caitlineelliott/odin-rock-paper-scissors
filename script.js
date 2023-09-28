@@ -111,8 +111,13 @@ const playGame = (playerSelection) => {
         }
 
         gameCount++
-    } else {
+    } 
+    if (gameCount === 5) {
         const message = getOverallWinnerMessage(parseInt(playerScore.innerHTML), parseInt(computerScore.innerHTML))
-        confirm(message)
+
+        setTimeout(() => {
+            confirm(message)
+            window.location.reload()
+        }, [100])
     }
 }
